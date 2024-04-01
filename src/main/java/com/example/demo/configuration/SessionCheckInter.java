@@ -22,7 +22,6 @@ public class SessionCheckInter implements HandlerInterceptor {
             return false;
         // 세션이 있을때
         }
-
         return true;
     }
 }

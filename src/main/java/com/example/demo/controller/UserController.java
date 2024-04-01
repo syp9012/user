@@ -49,7 +49,7 @@ public class UserController {
 
 	
 	// ID중복검사 ajax함수로 처리
-	@RequestMapping(value = "/user_idcheck.do", method = RequestMethod.POST)
+	@RequestMapping(value = "user_idcheck.do", method = RequestMethod.POST)
 	public String user_idcheck(String u_id, Model model) throws Exception {
 		System.out.println("id:"+u_id);
 		
@@ -154,8 +154,6 @@ public class UserController {
 		user.setU_nickname("임시 닉네임");
 		user.setU_phone("01000000000");
 		
-		// 가입자 혹은 비 가입자 체크 해서 처리
-//		service.checkUser(user.getU_id())
 		
 		if(service.checkUser(user.getU_id())==null&&service.checkUser(user.getU_withdraw()).equals("1")) {
 			service.insertUser(user);
@@ -175,9 +173,6 @@ public class UserController {
 	    // utf8로 인코딩
 		String encodedNickname  = URLEncoder.encode(user.getU_nickname(), StandardCharsets.UTF_8);
 
-		
-		
-		
 		return "redirect:/myPage.do?nickname=" + encodedNickname ;
 	}
 	
@@ -317,25 +312,13 @@ public class UserController {
 	
 	//회원가입
 	@RequestMapping("user_join_ok.do")
-	public String user_join_ok(User user, Model model) throws Exception {
+	public String user_join_ok(User user, Model model, HttpSession session) throws Exception {
 		System.out.println(user.getU_id());
 		User user1 = service.checkUser(user.getU_id());
 		
-		service.insertUser(user);
-		
-		System.out.println("회원가입완료");
 		return "redirect:user_login.do";
 	}	
 
-	
-	// id 중복검사
-	@RequestMapping("user_checkuser.do")
-	public String member_idcheck(String u_id, Model model) throws Exception {
-		int result = service.checkUserId(u_id);
-		model.addAttribute("result", result);
-
-		return "user/myPage";
-	}
 	
 	// 로그인 : 회원인증
 	@RequestMapping("/user_login_ok.do")
@@ -454,10 +437,10 @@ public class UserController {
 		} else { 					// 첨부파일이 수정되지 않으면
 			user.setU_profile(db.getU_profile());
 		}
-
+		//user 객체에 id 값을 주입
 		user.setU_id(id);		
-		
-		service.updateUser(user);		// update SQL문 
+		// update SQL문 
+		service.updateUser(user);		
 
 		model.addAttribute("u_nickname", user.getU_nickname());
 		model.addAttribute("u_profile", user.getU_profile());
@@ -466,6 +449,7 @@ public class UserController {
 		return "user/myPage";
 	}
 	
+	// 회원 탈퇴
 	@RequestMapping("user_delete.do")
 	public String deleteUser(HttpSession session) {
 		
@@ -476,6 +460,10 @@ public class UserController {
 		return "redirect:user_login.do";
 	}
 
+	
+	
+	
+	
 	
 }
 

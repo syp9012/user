@@ -87,7 +87,7 @@ function id_check(){
 	//아이디 중복확인
     $.ajax({
         type:"POST",
-        url:"/user_idcheck.do",
+        url:"user_idcheck.do",
         success: function (data) { // 콜백함수로 돌려받는값은 member_idcheck.do -> idcheckResult.jsp 에서 출력된 EL값입니다.
 //        	alert("return success="+data);
       	  if(data==1){			//중복 ID
