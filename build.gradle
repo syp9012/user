@@ -44,6 +44,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	testImplementation 'org.springframework.security:spring-security-test'
+	//slf4j 인터페이스
+	implementation 'org.slf4j:jcl-over-slf4j'
+	//logback 클래스
+	implementation 'ch.qos.logback:logback-classic'
 }
 
 tasks.named('test') {

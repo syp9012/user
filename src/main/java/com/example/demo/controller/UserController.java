@@ -37,7 +37,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class UserController {
 	
@@ -50,8 +52,7 @@ public class UserController {
 	
 	// ID중복검사 ajax함수로 처리
 	@RequestMapping(value = "user_idcheck.do", method = RequestMethod.POST)
-	public String user_idcheck(String u_id, Model model) throws Exception {
-		System.out.println("id:"+u_id);
+	public String user_idcheck(@RequestParam("u_id") String u_id, Model model) throws Exception {
 		
 		int result = service.checkUserId(u_id);
 		model.addAttribute("result", result);

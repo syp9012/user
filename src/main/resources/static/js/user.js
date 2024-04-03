@@ -88,6 +88,7 @@ function id_check(){
     $.ajax({
         type:"POST",
         url:"user_idcheck.do",
+        data : {"u_id":u_id},
         success: function (data) { // 콜백함수로 돌려받는값은 member_idcheck.do -> idcheckResult.jsp 에서 출력된 EL값입니다.
 //        	alert("return success="+data);
       	  if(data==1){			//중복 ID
@@ -122,7 +123,28 @@ function validate_userid(u_id){
   return pattern.test(u_id); // boolean 타입 리턴
 };
  
+function validatePhoneNumber() {
+    // 입력된 휴대폰 번호 가져오기
+    var phoneNumber = $("#u_phone").val();
 
+    // 정규 표현식을 사용하여 휴대폰 번호 유효성 검사
+    var regex = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+    if (regex.test(phoneNumber)) {
+      	var newtext='<font color="blue">사용가능한 휴대폰번호 입니다.</font>';
+  		$("#phonecheck").text('');
+  		$("#phonecheck").show();
+  		$("#phonecheck").append(newtext);
+  		$("#u_phone").focus();
+  		return false;
+    } else {
+		var newtext='<font color="red">유효하지 않은 휴대폰번호 입니다.</font>';
+		$("#phonecheck").text('');
+		$("#phonecheck").show();
+		$("#phonecheck").append(newtext);
+	  	$("#u_phone").val('').focus();
+	  	return false;
+    }
+}
 
 //  정보수정 유효성 검사
 function edit_check(){

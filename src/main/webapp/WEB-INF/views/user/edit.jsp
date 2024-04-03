@@ -57,6 +57,7 @@ function openDaumPostcode() {
 		<div class="form-group">
 			<label for="u_zipcode">우편번호</label> 
 			<input type="text" name="u_zipcode" id="u_zipcode" size="14" class="input_box" value="${user.u_zipcode}"/>
+			<br>
 			<input type="button" value="우편번호검색" class="input_button"
       		onclick="openDaumPostcode()" />
 		</div>

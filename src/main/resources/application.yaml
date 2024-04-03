@@ -10,10 +10,15 @@ spring:
       suffix: .jsp
   datasource:
     hikari:
+      #driver-class-name: com.mysql.cj.jdbc.Driver
+      #jdbc-url: jdbc:mysql://localhost:3306/syp
+      #username: syp
+      #password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/syp
-      username: syp
-      password: 1234
+      jdbc-url: jdbc:mysql://adam.cpiq8808qo9q.ap-northeast-2.rds.amazonaws.com:3306/aircamp
+      username: admin
+      password: choongang
+
 
   profiles:
     include: oauth
@@ -32,9 +37,9 @@ spring:
           authorizationGrantType: authorization_code
           redirectUri: http://localhost/oauth/naver/callback
           scope:
-            - nickname
-            - email
+            - profile_nickname
             - profile_image
+            - account_email
           clientName: Naver
         kakao:
           clientId: 18356fc026d73f2a2835407e685fb611

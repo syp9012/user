@@ -11,6 +11,7 @@
 <!-- 카카오에서 지원하는 sdk 파일 -->
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/login.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/join.css" />
 <script src="<%=request.getContextPath()%>/js/user.js"></script>
 
 </head>
@@ -30,7 +31,7 @@
 			<label for="password">비밀번호</label>
 		</div>
 
-		<div id="login_menu"  style="text-align: center;">
+		<div class =form-group id="login_menu"  style="text-align: center;">
 			<input type="submit" value="로그인"> 
 			<input type="button" value="회원가입" onclick="location='user_join.do'" /> 
 			<input type="button" value="비밀번호 찾기" onclick="location='user_findPwd.do''" /> 

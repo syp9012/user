@@ -24,7 +24,7 @@
 
 		<div class="form-group">
 			<label for="u_id">아이디</label> 
-			<input type="text" name="u_id" id="u_id" size="20" class="input_box" onchange="id_check()" />
+			<input type="text" name="u_id" id="u_id" size="20" class="input_box" onchange="id_check()"/>
 		</div>
 		<div id="idcheck"></div>
 
@@ -46,12 +46,12 @@
 
 		<div class="form-group">
 			<label for="u_phone">휴대폰번호</label> 
-			<input type="text" name="u_phone" id="u_phone" size="14" class="input_box" on/>
+			<input type="text" name="u_phone" id="u_phone" pattern="[0-9]{11}" maxlength="11" required class="input_box" onchange="validatePhoneNumber()"/>
 		</div>
 		<div id=phonecheck></div>
 
 
-		<div style='text-align:center'>
+		<div class=form-group style='text-align:center'>
 			<input type="submit" value="회원가입" class="input_button" /> 
 			<input type="button" value="가입취소" class="input_button" onclick="location.href='user_login.do'" />
 		</div>
