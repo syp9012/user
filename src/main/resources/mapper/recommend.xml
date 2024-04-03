@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.example.demo.mapper.RecommendDao">
+
+	<select id="recommendLoc" resultType="String">
+		SELECT mw_loc
+		FROM (
+    		SELECT mw_loc, ROW_NUMBER() OVER (ORDER BY mw_rainper ASC, ABS(mw_maxtep - mw_mintep) ASC) AS row_num
+    		FROM middle_weather
+    		WHERE mw_date IN ('2024-04-04', '2024-04-05')
+		) AS ranked_data
+		WHERE row_num = 1;
+	</select>
+	
+	
+	<resultMap id="Camp" type="com.example.demo.model.Camp">
+	    <id property="camp_no" column="camp_no"/>
+	    <result property="camp_name" column="camp_name"/>
+	    <result property="camp_intro" column="camp_intro"/>
+	    <result property="camp_desc" column="camp_desc"/>
+	    <result property="camp_scale" column="camp_scale"/>
+	    <result property="camp_insurance" column="camp_insurance"/>
+	    <result property="camp_owner" column="camp_owner"/>
+	    <result property="camp_dayoff_start" column="camp_dayoff_start"/>
+	    <result property="camp_dayoff_end" column="camp_dayoff_end"/>
+	    <result property="camp_feature" column="camp_feature"/>
+	    <result property="camp_type" column="camp_type"/>
+	    <result property="camp_nature_type" column="camp_nature_type"/>
+	    <result property="camp_do_name" column="camp_do_name"/>
+	    <result property="camp_city_name" column="camp_city_name"/>
+	    <result property="camp_zipcode" column="camp_zipcode"/>
+	    <result property="camp_addr1" column="camp_addr1"/>
+	    <result property="camp_addr2" column="camp_addr2"/>
+	    <result property="camp_locx" column="camp_locx"/>
+	    <result property="camp_locy" column="camp_locy"/>
+	    <result property="camp_tel" column="camp_tel"/>
+	    <result property="camp_url" column="camp_url"/>
+	    <result property="camp_reserve_url" column="camp_reserve_url"/>
+	    <result property="camp_reserve_type" column="camp_reserve_type"/>
+	    <result property="camp_normal_no" column="camp_normal_no"/>
+	    <result property="camp_car_no" column="camp_car_no"/>
+	    <result property="camp_glamp_no" column="camp_glamp_no"/>
+	    <result property="camp_carav_no" column="camp_carav_no"/>
+	    <result property="camp_glamp_inner_fclty" column="camp_glamp_inner_fclty"/>
+	    <result property="camp_carav_inner_fclty" column="camp_carav_inner_fclty"/>
+	    <result property="camp_open_season" column="camp_open_season"/>
+	    <result property="camp_open_date" column="camp_open_date"/>
+	    <result property="camp_toilet_no" column="camp_toilet_no"/>
+	    <result property="camp_shower_no" column="camp_shower_no"/>
+	    <result property="camp_sink_no" column="camp_sink_no"/>
+	    <result property="camp_add_fclty" column="camp_add_fclty"/>
+	    <result property="camp_able_fclty" column="camp_able_fclty"/>
+	    <result property="camp_equip_rent" column="camp_equip_rent"/>
+	    <result property="camp_able_animal" column="camp_able_animal"/>
+	    <result property="camp_image" column="camp_image"/>
+	</resultMap>
+		
+		
+	<select id="recommendCamp" parameterType="String" resultMap="Camp">
+		select * from camp where camp_image !="" and camp_do_name like #{loc} limit 10
+	</select>
+
+	<resultMap id="Tour" type="com.example.demo.model.Tour">
+	    <id property="tour_id" column="tour_id"/>
+	    <result property="tour_name" column="tour_name"/>
+	    <result property="tour_url" column="tour_url"/>
+	    <result property="tour_tel" column="tour_tel"/>
+	    <result property="tour_city_name" column="tour_city_name"/>
+	    <result property="tour_addr1" column="tour_addr1"/>
+	    <result property="tour_addr2" column="tour_addr2"/>
+	    <result property="tour_zipcode" column="tour_zipcode"/>
+	    <result property="tour_locx" column="tour_locx"/>
+	    <result property="tour_locy" column="tour_locy"/>
+	    <result property="tour_desc" column="tour_desc"/>
+	    <result property="tour_babycarry" column="tour_babycarry"/>
+	    <result property="tour_animal_able" column="tour_animal_able"/>
+	    <result property="tour_age_able" column="tour_age_able"/>
+	    <result property="tour_heritage1" column="tour_heritage1"/>
+	    <result property="tour_heritage2" column="tour_heritage2"/>
+	    <result property="tour_heritage3" column="tour_heritage3"/>
+	    <result property="tour_infocenter" column="tour_infocenter"/>
+	    <result property="tour_open_date" column="tour_open_date"/>
+	    <result property="tour_parking" column="tour_parking"/>
+	    <result property="tour_dayoff" column="tour_dayoff"/>
+	    <result property="tour_usetime" column="tour_usetime"/>
+	    <result property="tour_images" column="tour_images"/>
+	</resultMap>	
+	
+	
+	<select id="recommendTour" parameterType="tour" resultMap="Tour">
+		select * from tour where tour_images!= "" and tour_addr1 like concat('%',#{loc},'%') limit 10
+	</select>
+	
+	
+	
+
+</mapper>
