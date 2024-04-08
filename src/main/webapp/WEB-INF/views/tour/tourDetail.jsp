@@ -1,101 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
-<!-- 슬릭 라이브러리 임포트 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId="></script>
-
-
+<%@ include file="../header.jsp"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>캠핑장 검색</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css" />
-<script src="<%=request.getContextPath()%>/js/main.js"></script>
 </head>
 <body>
-<div class="header-inner">
-	
-	<div class="navbarmenu-wrap">
-		<h1>
-			<a href="recommend.do">
-				<img src="/img/logo_gr01.png" style="width:140px;">
-			</a>
-		</h1>
-		<div>
-		<a href="">회원가입  </a>
-		<a href="">로그인  </a>
-		
-		</div>
-		
-		<nav class="navbarmenu-container">
-			<ul class="menu-list">
-				<li class="depth1">
-					<a href="">캠핑장검색</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">캠핑장검색</a>
-						<li>
-					</ul>
-				</li>
-				<li class="depth1">
-					<a href="">관광지검색</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">"관광지검색"</a>
-						<li>
-					</ul>
-				</li>
-				<li class="depth1">
-					<a href="">날씨조회</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">날씨조회</a>
-						<li>
-					</ul>
-				</li>
-				<li class="depth1">
-					<a href="">공지사항</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">공지사항</a>
-						<li>
-					</ul>
-				</li>
-		</nav>
-	</div>
+
+<div> : ${tour.tour_images}</div>
+<div>관광지명 : ${tour.tour_name}</div>
+<div>홈페이지 주소 : ${tour.tour_url}</div>
+<div>전화번호 : ${tour.tour_tel}</div>
+<div>주소 : ${tour.tour_addr1}</div>
+
 
 
 <h1>상세정보</h1>
-${tour.tour_id}
-${tour.tour_name}
-${tour.tour_url}
-${tour.tour_tel}
-${tour.tour_city_name}
-${tour.tour_addr1}
-${tour.tour_addr2}
-${tour.tour_zipcode}
-
-${tour.tour_desc}
-${tour.tour_babycarry}
-${tour.tour_animal_able}
-${tour.tour_age_able}
-${tour.tour_heritage1}
-${tour.tour_heritage2}
-${tour.tour_heritage3}
-${tour.tour_infocenter}
-${tour.tour_open_date}
-${tour.tour_parking}
-${tour.tour_dayoff}
-${tour.tour_usetime}
-${tour.tour_images}
-
+<div>시군구 : ${tour.tour_city_name}</div>
+<div>세부주소 : ${tour.tour_addr2}</div>
+<div>우편번호 : ${tour.tour_zipcode}</div>
+<div>상세내용 : ${tour.tour_desc}</div>
+<div>유모차여부 : ${tour.tour_babycarry}</div>
+<div>애완동물여부 : ${tour.tour_animal_able}</div>
+<div>이용가능나이 : ${tour.tour_age_able}</div>
+<div>세계문화유산유무 : ${tour.tour_heritage1}</div>
+<div>세계자연유산유무 : ${tour.tour_heritage2}</div>
+<div>세계기록유산유무 : ${tour.tour_heritage3}</div>
+<div>문의및안내 : ${tour.tour_infocenter}</div>
+<div>개장일 : ${tour.tour_open_date}</div>
+<div>주차시설 : ${tour.tour_parking}</div>
+<div>쉬는날 : ${tour.tour_dayoff}</div>
+<div>이용시간 : ${tour.tour_usetime}</div>
 
 
 <h1>지도 출력</h1>
@@ -130,9 +68,6 @@ infowindow.open(map, marker);
 
 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 map.setCenter(coords);
- 
-  
-
 
 </script>
 

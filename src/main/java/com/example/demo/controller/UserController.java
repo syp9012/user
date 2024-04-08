@@ -43,6 +43,57 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UserController {
 	
+	//네이버 application.yaml 파일을 가져와 변수에 저장
+	//네이버
+	//네이버 clientid
+	@Value("${spring.security.oauth2.client.registration.naver.clientId}")
+	private String naverClientId;
+	
+	//네이버 clientSecret
+	@Value("${spring.security.oauth2.client.registration.naver.clientSecret}")
+	private String naverClientSecret;
+	
+	//네이버 clientAuthenticationMethod
+	@Value("${spring.security.oauth2.client.registration.naver.clientAuthenticationMethod}")
+	private String naverClientAuthenticationMethod;
+	
+	//네이버 authenticationGrantType
+	@Value("${spring.security.oauth2.client.registration.naver.authorizationGrantType}")
+	private String naverAuthorizationGrantType;
+	
+	//네이버 redirectUri
+	@Value("${spring.security.oauth2.client.registration.naver.redirectUri}")
+	private String naverRedirectUri;
+	
+	//네이버 clientName
+	@Value("${spring.security.oauth2.client.registration.naver.clientName}")
+	private String naverClientName;
+	
+
+	
+	//카카오
+	//카카오 clientid
+	@Value("${spring.security.oauth2.client.registration.kakao.clientId}")
+	private String kakaoClientId;
+	
+	//카카오 clientAuthenticationMethod
+	@Value("${spring.security.oauth2.client.registration.kakao.clientAuthenticationMethod}")
+	private String kakaoClientAuthenticationMethod;
+	
+	//카카오 authorizationGrantType
+	@Value("${spring.security.oauth2.client.registration.kakao.authorizationGrantType}")
+	private String kakaoAuthorizationGrantType;
+	
+	//카카오 redirectUri
+	@Value("${spring.security.oauth2.client.registration.kakao.redirectUri}")
+	private String kakaoRedirectUri;
+	
+	//카카오 clientName
+	@Value("${spring.security.oauth2.client.registration.kakao.clientName}")
+	private String kakaoClientName;
+		
+
+	
 	@Autowired
 	UserService service;
 	
@@ -69,7 +120,7 @@ public class UserController {
 	//카카오톡 회원가입 로그인
 	@GetMapping("/oauth/kakao/callback")
 		public String kakaoCallback(@RequestParam("code") String code, HttpSession session, Model model) { // Data를 리턴해주는 컨트롤러 
-		
+
 		//post 방식으로 key=value  데이터를 요청(카카오쪽으로
 		//Retrofit2
 		//OkHttp
@@ -82,9 +133,9 @@ public class UserController {
 		
 		//HttpBody 오브젝트 생성
 		MultiValueMap<String, String> params =new LinkedMultiValueMap<>();
-		params.add("grant_type", "authorization_code");
-		params.add("client_id", "18356fc026d73f2a2835407e685fb611");
-		params.add("redirect_uri", "http://localhost/oauth/kakao/callback");
+		params.add("grant_type", kakaoAuthorizationGrantType);
+		params.add("client_id", kakaoClientId);
+		params.add("redirect_uri", kakaoRedirectUri);
 		params.add("code", code);
 		
 		//HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -180,7 +231,6 @@ public class UserController {
 	//네이버 회원가입 로그인
 	@GetMapping("/oauth/naver/callback")
 		public String naverCallback(@RequestParam("code") String code, HttpSession session, Model model) { // Data를 리턴해주는 컨트롤러 
-	
 		
 		//post 방식으로 key=value  데이터를 요청(카카오쪽으로
 		//Retrofit2
@@ -190,15 +240,15 @@ public class UserController {
 		//HttpHeader 오브젝트 생성
 		RestTemplate rt = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("X-Naver-Client-Id","gWHz98Kmv8VTU8BIGrB2");
-		headers.add("X-Naver-Client-Secret","obsy5k5ACJ");
+		headers.add("X-Naver-Client-Id",naverClientId);
+		headers.add("X-Naver-Client-Secret", naverClientSecret);
 		
 		//HttpBody 오브젝트 생성
 		MultiValueMap<String, String> params =new LinkedMultiValueMap<>();
-		params.add("grant_type", "authorization_code");
-		params.add("client_id", "gWHz98Kmv8VTU8BIGrB2");
-		params.add("client_secret", "obsy5k5ACJ");
-		params.add("redirect_uri", "http://localhost/oauth/naver/callback");
+		params.add("grant_type", naverAuthorizationGrantType);
+		params.add("client_id", naverClientId);
+		params.add("client_secret", naverClientSecret);
+		params.add("redirect_uri", naverRedirectUri);
 		params.add("code", code);
 		params.add("state", "1234");
 		
@@ -314,8 +364,10 @@ public class UserController {
 	//회원가입
 	@RequestMapping("user_join_ok.do")
 	public String user_join_ok(User user, Model model, HttpSession session) throws Exception {
-		System.out.println(user.getU_id());
-		User user1 = service.checkUser(user.getU_id());
+		
+		
+		service.insertUser(user);
+		
 		
 		return "redirect:user_login.do";
 	}	

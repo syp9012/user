@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.example.demo.mapper.NoticeDao">
+	<select id="getListCount" parameterType="notice" resultType="int">
+		select count(*) from notice
+		<where>
+			<if test="searchWord==''">
+			</if>
+			<if test="searchWord!=''">
+			</if>
+		</where>
+	</select>
+	
+	<resultMap id="Notice" type="notice">
+	    <result property="no_no" column="no_no" />
+	    <result property="no_subject" column="no_subject" />
+	    <result property="no_content" column="no_content" />
+	    <result property="no_readcount" column="no_readcount" />
+	    <result property="no_date" column="no_date" />
+	    <result property="no_level" column="no_level" />
+	    <result property="no_ref" column="no_ref" />
+	    <result property="no_step" column="no_step" />
+	    <result property="startRow" column="startRow" />
+	    <result property="endRow" column="endRow" />
+	    <result property="limit" column="limit" />
+	    <result property="searchWord" column="searchWord" />
+	</resultMap>
+	
+
+	
+	
+	<select id="getList" parameterType="notice" resultMap="Notice">
+		select * from notice 
+		limit #{startRow},#{limit}
+	</select>
+	
+	
+	<insert id="insertNotice" parameterType="notice">
+		insert into notice (no_subject, no_content, no_date) values(#{no_subject}, #{no_content}, sysdate)
+	</insert>
+	
+	<update id="updateNotice"  parameterType="notice">
+		update notice set no_subject=#{no_subject} no_content=#{no_content}
+		where no_no=#{no_no}
+	
+	</update>
+	
+	<delete id="deleteNotice" parameterType="notice">
+		delete from notice where no_no=#{no_no}
+	</delete>
+
+</mapper>

@@ -22,3 +22,5 @@ public class User {
 	private String u_profile;
 	private String u_withdraw;
 }
+
+

@@ -2,9 +2,105 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.mapper.CampDao">
+	<!-- 캠핑장 상세정보 -->
 	<select id="findCamp" parameterType="String" resultType="camp">
 		select * from camp where camp_no=#{camp_no}
 	</select>
 	
+		<resultMap id="Camp" type="com.example.demo.model.Camp">
+	    <id property="camp_no" column="camp_no"/>
+	    <result property="camp_name" column="camp_name"/>
+	    <result property="camp_intro" column="camp_intro"/>
+	    <result property="camp_desc" column="camp_desc"/>
+	    <result property="camp_scale" column="camp_scale"/>
+	    <result property="camp_insurance" column="camp_insurance"/>
+	    <result property="camp_owner" column="camp_owner"/>
+	    <result property="camp_dayoff_start" column="camp_dayoff_start"/>
+	    <result property="camp_dayoff_end" column="camp_dayoff_end"/>
+	    <result property="camp_feature" column="camp_feature"/>
+	    <result property="camp_type" column="camp_type"/>
+	    <result property="camp_nature_type" column="camp_nature_type"/>
+	    <result property="camp_do_name" column="camp_do_name"/>
+	    <result property="camp_city_name" column="camp_city_name"/>
+	    <result property="camp_zipcode" column="camp_zipcode"/>
+	    <result property="camp_addr1" column="camp_addr1"/>
+	    <result property="camp_addr2" column="camp_addr2"/>
+	    <result property="camp_locx" column="camp_locx"/>
+	    <result property="camp_locy" column="camp_locy"/>
+	    <result property="camp_tel" column="camp_tel"/>
+	    <result property="camp_url" column="camp_url"/>
+	    <result property="camp_reserve_url" column="camp_reserve_url"/>
+	    <result property="camp_reserve_type" column="camp_reserve_type"/>
+	    <result property="camp_normal_no" column="camp_normal_no"/>
+	    <result property="camp_car_no" column="camp_car_no"/>
+	    <result property="camp_glamp_no" column="camp_glamp_no"/>
+	    <result property="camp_carav_no" column="camp_carav_no"/>
+	    <result property="camp_glamp_inner_fclty" column="camp_glamp_inner_fclty"/>
+	    <result property="camp_carav_inner_fclty" column="camp_carav_inner_fclty"/>
+	    <result property="camp_open_season" column="camp_open_season"/>
+	    <result property="camp_open_date" column="camp_open_date"/>
+	    <result property="camp_toilet_no" column="camp_toilet_no"/>
+	    <result property="camp_shower_no" column="camp_shower_no"/>
+	    <result property="camp_sink_no" column="camp_sink_no"/>
+	    <result property="camp_add_fclty" column="camp_add_fclty"/>
+	    <result property="camp_able_fclty" column="camp_able_fclty"/>
+	    <result property="camp_equip_rent" column="camp_equip_rent"/>
+	    <result property="camp_able_animal" column="camp_able_animal"/>
+	    <result property="camp_image" column="camp_image"/>
+	    <result property="search_word" column="search_word"/>
+		<result property="do_name" column="do_name"/>
+		<result property="city_name" column="city_name"/>
+		<result property="startRow" column="startRow"/>
+		<result property="endRow" column="endRow"/>
+		<result property="limit" column="limit"/>
+	</resultMap>
+	
+		
+	<!-- 검색조건에 해당하는 캠핑장 리스트수 -->
+	<select id="getListCount" parameterType="camp" resultType="int">
+		select count(*) from camp
+		<where>
+			<if test="do_name=='전체' and city_name=='전체'">
+				and (camp_name like CONCAT('%', #{search_word}, '%')
+				or camp_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name=='전체'">
+				and camp_do_name like CONCAT('%', #{do_name}, '%')
+				and (camp_name like CONCAT('%', #{search_word}, '%')
+				or camp_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name!='전체'">
+				and camp_do_name like CONCAT('%', #{do_name}, '%')
+				and camp_city_name like CONCAT('%', #{city_name}, '%')
+				and (camp_name like CONCAT('%', #{search_word}, '%')
+				or camp_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>			
+		</where>
+	</select> 
+	
+	
+	<!-- 검색조건에 해당하는 캠핑장 리스트 -->
+	<select id="searchCampList" parameterType="camp" resultMap="Camp">
+		select * from camp
+		<where>
+			<if test="do_name=='전체' and city_name=='전체'">
+				and (camp_name like CONCAT('%', #{search_word}, '%')
+				or camp_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name=='전체'">
+				and camp_do_name like CONCAT('%', #{do_name}, '%')
+				and (camp_name like CONCAT('%', #{search_word}, '%')
+				or camp_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name!='전체'">
+				and camp_do_name like CONCAT('%', #{do_name}, '%')
+				and camp_city_name like CONCAT('%', #{city_name}, '%')
+				and (camp_name like CONCAT('%', #{search_word}, '%')
+				or camp_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>			
+		</where>
+				Limit #{startRow},#{limit}
+	</select> 
 
+	
 </mapper>

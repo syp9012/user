@@ -1,122 +1,118 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
-<!-- 슬릭 라이브러리 임포트 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId="></script>
+<%@ include file="../header.jsp"%>
 
 
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>캠핑장 검색</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css" />
-<script src="<%=request.getContextPath()%>/js/main.js"></script>
+<script>
+// 상세정보 
+function boardlist(page){
+	$("#writeform").hide();
+	$("#detail").hide();
+	$("#updateform").hide();
+	$("#deleteform").hide();
+	
+	$("#mytable").show();
+	$("#pagination").show();
+	
+	$.ajax({
+		type : "GET", // select 방식
+		url : "${pageContext.request.contextPath}/campDetail.do?camp_no="++"&page="+page
+	$("#write").show();
+	$("#write").click(function(){
+	});
+}
+
+
+
+
+
+
+</script>
+<style type="text/css">
+	.content {display:flex;}
+</style>
 </head>
 <body>
-<div class="header-inner">
-	
-	<div class="navbarmenu-wrap">
-		<h1>
-			<a href="recommend.do">
-				<img src="/img/logo_gr01.png" style="width:140px;">
-			</a>
-		</h1>
+
+<h1>캠핑장 정보</h1>
+<div>
+	<div class="content">
+		<img src=${camp.camp_image}>
 		<div>
-		<a href="">회원가입  </a>
-		<a href="">로그인  </a>
-		
+			캠핑장명 : ${camp.camp_name}
+			캠핑장 전화번호 : ${camp.camp_tel}
+			캠핑장 홈페이지 주소 : ${camp.camp_url}
 		</div>
-		
-		<nav class="navbarmenu-container">
-			<ul class="menu-list">
-				<li class="depth1">
-					<a href="">캠핑장검색</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">캠핑장검색</a>
-						<li>
-					</ul>
-				</li>
-				<li class="depth1">
-					<a href="">관광지검색</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">"관광지검색"</a>
-						<li>
-					</ul>
-				</li>
-				<li class="depth1">
-					<a href="">날씨조회</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">날씨조회</a>
-						<li>
-					</ul>
-				</li>
-				<li class="depth1">
-					<a href="">공지사항</a>
-					<ul class="dropdown-content">
-						<li>
-							<a href="">공지사항</a>
-						<li>
-					</ul>
-				</li>
-		</nav>
 	</div>
+</div>	
+	<div>캠핑장 소개</div><div>${camp.camp_open_season}</div>
 
 
-<h1>상세정보</h1>
-${camp.camp_no}
-${camp.camp_name}
-${camp.camp_intro}
-${camp.camp_desc}
-${camp.camp_scale}
-${camp.camp_insurance}
-${camp.camp_owner}
-${camp.camp_dayoff_start}
-${camp.camp_dayoff_end}
-${camp.camp_feature}
-${camp.camp_type}
-${camp.camp_nature_type}
-${camp.camp_do_name}
-${camp.camp_city_name}
-${camp.camp_zipcode}
-${camp.camp_addr1}
-${camp.camp_addr2}
+<div class="bt_wrap">
+	<a href="noticeList.do" class="on">목록</a>
+	<a href="insertNoticeForm.do" class="on">글작성</a>
+</div>
 
-${camp.camp_tel}
-${camp.camp_url}
-${camp.camp_reserve_url}
-${camp.camp_reserve_type}
-${camp.camp_normal_no}
-${camp.camp_car_no}
-${camp.camp_glamp_no}
-${camp.camp_carav_no}
-${camp.camp_glamp_inner_fclty}
-${camp.camp_carav_inner_fclty}
-${camp.camp_open_season}
-${camp.camp_open_date}
-${camp.camp_toilet_no}
-${camp.camp_shower_no}
-${camp.camp_sink_no}
-${camp.camp_add_fclty}
-${camp.camp_able_fclty}
-${camp.camp_equip_rent}
-${camp.camp_able_animal}
-${camp.camp_image}
+
+	
+<div id="detail">
+	<div>캠핑장 소개 : ${camp.camp_intro}</div>
+	<div>캠핑장 상세소개 : ${camp.camp_desc}</div>
+	<div>캠핑장 전체면적 : ${camp.camp_scale}</div>
+	<div>캠핑장 보험가입유무 : ${camp.camp_insurance}</div>
+	<div>캠핑장 사업주체 : ${camp.camp_owner}</div>
+	<div>캠핑장 휴무기간 시작일 : ${camp.camp_dayoff_start}</div>
+	<div>캠핑장 휴무기간 종료일 : ${camp.camp_dayoff_end}</div>
+	<div>캠핑장 특징 : ${camp.camp_feature}</div>
+	<div>캠핑장 업종 : ${camp.camp_type}</div>
+	<div>캠핑장 입지구분 : ${camp.camp_nature_type}</div>
+	<div>캠핑장 도 : ${camp.camp_do_name}</div>
+	<div>캠핑장 시군구 : ${camp.camp_city_name}</div>
+	<div>캠핑장 우편번호 : ${camp.camp_zipcode}</div>
+	<div>캠핑장 주소 : ${camp.camp_addr1}</div>
+	<div>캠핑장 상세주소 : ${camp.camp_addr2}</div>
+	
+	
+	<div>캠핑장 예약페이지 주소 : ${camp.camp_reserve_url}</div>
+	<div>캠핑장 예약 구분 : ${camp.camp_reserve_type}</div>
+	<div>캠핑장 일반야영장 : ${camp.camp_normal_no}</div>
+	<div>캠핑장 자동차야영장 개수 : ${camp.camp_car_no}</div>
+	<div>캠핑장 글램핑장 개수 : ${camp.camp_glamp_no}</div>
+	<div>캠핑장 카라반 개수 : ${camp.camp_carav_no}</div>
+	<div>캠핑장 글램핑 내부시설 : ${camp.camp_glamp_inner_fclty}</div>
+	<div>캠핑장 카라반 내부시설 : ${camp.camp_carav_inner_fclty}</div>
+	
+	<div>캠핑장 운영일 : ${camp.camp_open_date}</div>
+	<div>캠핑장 화장실 개수 : ${camp.camp_toilet_no}</div>
+	<div>캠핑장 샤워장 개수 : ${camp.camp_shower_no}</div>
+	<div>캠핑장 개수대 개수 : ${camp.camp_sink_no}</div>
+	<div>캠핑장 부대시설 : ${camp.camp_add_fclty}</div>
+	<div>캠핑장 주변이용가능시설 : ${camp.camp_able_fclty}</div>
+	<div>캠핑장 캠핑장비대여 : ${camp.camp_equip_rent}</div>
+	<div>캠핑장 애완동물출입 : ${camp.camp_able_animal}</div>
+</div>
+
+
+
+
+
+
+
+<div id="map" style="width:500px;height:400px; text-align:center;"></div>
+
 
 
 <h1>지도 출력</h1>
 
 <div id="map" style="width:500px;height:400px; text-align:center;"></div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c14db14988057dc0387ab78d000e6d1d&libraries=services"></script>
+
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {

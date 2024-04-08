@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.model.Camp;
 import com.example.demo.model.Tour;
-import com.example.demo.service.RecommendService;
+import com.example.demo.service.MainService;
 
 @Controller
-public class RecommendController {
+public class MainController {
 	
 	@Autowired
-	private RecommendService service;
+	private MainService service;
 	
 	
-	@RequestMapping("recommend.do")
-	public String recommandTour(Model model) {
+	@RequestMapping("main.do")
+	public String recommendCampTour(Model model) {
 		
 		String loc = service.recommendLoc();
-		System.out.println(loc);
+		//System.out.println(loc);
 		
 		List<Tour> tourList = service.recommendTour(loc);
 		List<Camp> campList = service.recommendCamp(loc);
@@ -33,17 +31,19 @@ public class RecommendController {
 			if(tour.getTour_images()!="") {
 				String[] image = tour.getTour_images().split(",");
 				tour.setTour_image1(image[0]);
+			} else {
+				tour.setTour_image1("");
 			}
 			String[] addr = tour.getTour_addr1().split(" ");
-			tour.setTour_addr1st(addr[0]);
-			tour.setTour_addr2nd(addr[1]);
+			tour.setDo_name(addr[0]);
+			tour.setCity_name(addr[1]);
 		}
 
 
 		model.addAttribute("campList",campList);
 		model.addAttribute("tourList",tourList);
 		
-		return "main/mainPage";
+		return "main";
 		
 	}
 	

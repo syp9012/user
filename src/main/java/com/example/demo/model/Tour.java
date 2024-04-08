@@ -32,6 +32,16 @@ public class Tour {
     private String tour_usetime;
     private String tour_images;
     private String tour_image1;
-    private String tour_addr1st;
-    private String tour_addr2nd;
+
+    //search
+	private String search_word;
+	private String do_name;
+	private String city_name;
+    
+	//page
+	private int startRow;
+    private int endRow;
+    private int limit;
+    
+    
 }

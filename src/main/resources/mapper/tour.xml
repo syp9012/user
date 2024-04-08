@@ -5,6 +5,90 @@
 	<select id="findTour" parameterType="String" resultType="tour">
 		select * from tour where tour_id=#{tour_id}
 	</select>
+<resultMap id="Tour" type="com.example.demo.model.Tour">
+    <id property="tour_id" column="tour_id"/>
+    <result property="tour_name" column="tour_name"/>
+    <result property="tour_url" column="tour_url"/>
+    <result property="tour_tel" column="tour_tel"/>
+    <result property="tour_city_name" column="tour_city_name"/>
+    <result property="tour_addr1" column="tour_addr1"/>
+    <result property="tour_addr2" column="tour_addr2"/>
+    <result property="tour_zipcode" column="tour_zipcode"/>
+    <result property="tour_locx" column="tour_locx"/>
+    <result property="tour_locy" column="tour_locy"/>
+    <result property="tour_desc" column="tour_desc"/>
+    <result property="tour_babycarry" column="tour_babycarry"/>
+    <result property="tour_animal_able" column="tour_animal_able"/>
+    <result property="tour_age_able" column="tour_age_able"/>
+    <result property="tour_heritage1" column="tour_heritage1"/>
+    <result property="tour_heritage2" column="tour_heritage2"/>
+    <result property="tour_heritage3" column="tour_heritage3"/>
+    <result property="tour_infocenter" column="tour_infocenter"/>
+    <result property="tour_open_date" column="tour_open_date"/>
+    <result property="tour_parking" column="tour_parking"/>
+    <result property="tour_dayoff" column="tour_dayoff"/>
+    <result property="tour_usetime" column="tour_usetime"/>
+    <result property="tour_images" column="tour_images"/>
+    <result property="tour_image1" column="tour_image1"/>
+    <!-- 검색 -->
+    <result property="search_word" column="search_word"/>
+    <result property="do_name" column="do_name"/>
+    <result property="city_name" column="city_name"/>
+    <!-- 페이지 -->
+    <result property="startRow" column="startRow"/>
+    <result property="endRow" column="endRow"/>
+    <result property="limit" column="limit"/>
+</resultMap>
+
+	
+	
+	
+		
+	<!-- 검색조건에 해당하는 관광지 리스트수 -->
+	<select id="getListCount" parameterType="tour" resultType="int">
+		select count(*) from tour
+		<where>
+			<if test="do_name=='전체' and city_name=='전체'">
+				and (tour_name like CONCAT('%', #{search_word}, '%')
+				or tour_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name=='전체'">
+				and tour_addr1 like CONCAT('%', #{do_name}, '%')
+				and (tour_name like CONCAT('%', #{search_word}, '%')
+				or tour_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name!='전체'">
+				and tour_addr1 like CONCAT('%', #{do_name}, '%')
+				and tour_city_name like CONCAT('%', #{city_name}, '%')
+				and (tour_name like CONCAT('%', #{search_word}, '%')
+				or tour_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>			
+		</where>
+	</select> 
+	
+	
+	<!-- 검색조건에 해당하는 캠핑장 리스트 -->
+	<select id="searchTourList" parameterType="tour" resultMap="Tour">
+		select * from tour
+		<where>
+			<if test="do_name=='전체' and city_name=='전체'">
+				and (tour_name like CONCAT('%', #{search_word}, '%')
+				or tour_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name=='전체'">
+				and tour_addr1 like CONCAT('%', #{do_name}, '%')
+				and (tour_name like CONCAT('%', #{search_word}, '%')
+				or tour_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>
+			<if test="do_name!='전체'and city_name!='전체'">
+				and tour_addr1 like CONCAT('%', #{do_name}, '%')
+				and tour_city_name like CONCAT('%', #{city_name}, '%')
+				and (tour_name like CONCAT('%', #{search_word}, '%')
+				or tour_addr1 like CONCAT('%', #{search_word}, '%'))
+			</if>		
+		</where>
+				Limit #{startRow},#{limit}
+	</select> 
 	
 
 </mapper>

@@ -48,5 +48,14 @@ public class Camp {
     private String camp_able_animal;
     private String camp_image;
 
+    //search
+	private String search_word;
+	private String do_name;
+	private String city_name;
+    
+	//page
+	private int startRow;
+    private int endRow;
+    private int limit;
     
 }
